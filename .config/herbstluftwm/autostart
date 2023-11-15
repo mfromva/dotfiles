@@ -7,30 +7,28 @@ function run {
   fi
 }
 
-#change your keyboard if you need it
-#setxkbmap -layout be
+
 
 #Autostart applications
+/usr/libexec/polkit-gnome-authentication-agent-1 &
 pkill -u $USER '^picom$'
 picom --config $HOME/.config/herbstluftwm/picom.conf &
-#/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-
-xsetroot -solid '#000000'
-xsetroot -cursor_name left_ptr &
-
 sxhkd -c ~/.config/herbstluftwm/sxhkd/sxhkdrc &
-wal -R &
-#nm-applet &
-run dunst &
-#xfce4-power-manager &
+nitrogen --restore &
+indicator-stickynotes &
 numlockx on &
-#nitrogen --restore &
-run indicator-stickynotes &
 run synergy &
+/usr/bin/emacs --daemon &
+dunst &
+
 
 # Enable Super Keys For Menu
 ksuperkey -e 'Super_L=Alt_L|F1' &
 ksuperkey -e 'Super_R=Alt_L|F1' &
+
+xsetroot -solid '#000000'
+xsetroot -cursor_name left_ptr &
+
 
 #herbstluftwm start
 hc() {
@@ -40,7 +38,6 @@ hc() {
 hc emit_hook reload
 
 # KEYBINDINGS
-
 # remove all existing keybindings
 hc keyunbind --all
 
@@ -53,19 +50,7 @@ hc keybind $Mod-Shift-r reload
 hc keybind $Mod-Shift-q close
 hc keybind $Mod-q close
 
-#Most of the keybindings have been set in sxhkd config file
-#you can set them also here
-# hc load 7 "(split horizontal:0.449800:0 (split vertical:0.800000:0 (split vertical:0.600000:0 (clients vertical:0) (clients vertical:0)) (clients vertical:0)) (split vertical:0.800000:1 (clients vertical:0) (clients vertical:0)))"
-# hc load 5 '
-# (split horizontal:0.450000:1
-#   (split vertical:0.500000:0
-#     (split vertical:0.500000:1
-#     (clients vertical:0 )
-#     (clients vertical:0 ))
-#     (clients horizontal:0 ))
-#   (split vertical:0.550000:0
-#     (clients vertical:0 )
-#     (clients vertical:0 )))'
+
 #reload sxhkd:
 hc keybind $Mod-Shift-s  pkill -USR1 -x sxhkd
 
@@ -134,14 +119,7 @@ tag_names=( {1..10} )
 # tag_keys=( {1..10} 0 )
 tag_keys=( "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" )
 
-#Belgian azerty
-#tag_keys=( ampersand eacute quotedbl apostrophe parenleft section egrave exclam ccedilla agrave )
 
-#French azerty
-#tag_keys=( ampersand eacute quotedbl apostrophe parenleft minus egrave underscore ccedilla agrave )
-
-#Discord tip for some keyboards
-#tag_keys=( "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" )
 
 hc rename default "${tag_names[0]}" || true
 for i in ${!tag_names[@]} ; do
@@ -219,7 +197,6 @@ hc set frame_padding 0
 hc set mouse_recenter_gap 0
 hc set smart_frame_surroundings 1
 hc set smart_window_surroundings 0
-# hc set tree_style '╾│ ├└╼─┐'
 hc set tree_style '╾│ ├└╼─┐'
 hc set window_gap 10
 
@@ -230,55 +207,37 @@ hc rule focus=on # normally focus new clients
 #hc rule focus=off # normally do not focus new clients
 hc floating float on
 hc floating 3 on
+
 #assign applications to workspaces or tags
 hc rule class~'(firefox|Vivaldi-stable|Vivaldi-snapshot|Chromium|Google-chrome|Brave-browser)' tag=1 switchtag=on focus=on
 hc rule class~'(Subl3|code-oss)' tag=2 switchtag=on focus=on
-hc rule class=Gimp-2.10 tag=5 switchtag=on focus=on
-hc rule class=Inkscape tag=5 switchtag=on focus=on
-hc rule class=vlc tag=4 focus=on switchtag=on
+=hc rule class=vlc tag=4 focus=on switchtag=on
 hc rule class=qBittorrent tag=7 focus=on switchtag=on
 hc rule class=discord tag=9 focus=on switchtag=on
-hc rule class=TelegramDesktop tag=9 focus=on switchtag=on
-# hc rule class~'(firefox|Vivaldi-stable|Vivaldi-snapshot|Chromium|Google-chrome)' tag=1
-# hc rule class~'(Atom|Subl3)' tag=2
-# hc rule class=Inkscape tag=3
-# hc rule class=Gimp tag=4
-# hc rule class~'(Meld|ristretto|Nitrogen)' tag=5
-# hc rule class=vlc tag=6
-# hc rule class~'(VirtualBox Manager|Vmplayer)' tag=7
-# hc rule class~'(Thunar|Nemo|Caja|Nautilus)' tag=8
-# hc rule class~'(Evolution|Geary)' tag=9
-# hc rule class=Spotify tag=10
-hc rule class=Indicator-stickynotes tag=9 floating=on
-hc rule class=indicator-stickynotes tag=9 floating=on
-hc rule class=Emacs tag=8 fullscreen=on
+hc rule class=qutebrowser tag=8 
 hc rule class=Virt-manager tag=7 floating=on
+hc rule class=thunderbird tag=5 switchtag=on focus=on
+hc rule class=Mail tag=5 focus=on
+hc rule class=Doom Emacs tag=0 focus=on
+hc rule class=Xfce4-terminal --drop-down floating=on
+hc rule class=Hexchat tag=9 switchtag=on focus=on
+hc rule class=GNS3 tag=3 switchtag=on focus=on
+hc rule class=Indicator-stickynotes tag=9 switchtag=on focus=on
 
 
 # give focus to most common terminals
-#hc rule class~'(.*[Rr]xvt.*|.*[Tt]erm|Konsole)' focus=on
+hc rule class~'(.*[Rr]xvt.*|Alacritty|Konsole)' focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
 hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
-hc rule class=Oblogout fullscreen=on
-hc rule class=Insync pseudotile=on
-hc rule class=VirtualBox fullscreen=on
 
 # unlock, just to be sure
 hc unlock
 
-#Dualmonitor setup
-# Find out your monitor name with xrandr or arandr (save and you get this line)
-#xrandr --output VGA-1 --primary --mode 1360x768 --pos 0x0 --rotate normal
-#xrandr --output DP2 --primary --mode 1920x1080 --rate 60.00 --output LVDS1 --off &
-#xrandr --output LVDS1 --mode 1366x768 --output DP3 --mode 1920x1080 --right-of LVDS1
-#xrandr --output HDMI2 --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output VIRTUAL1 --off
-#xrandr --output HDMI-0 --mode 1920x1080 --pos 1920x0 --rotate normal --output DVI-0 --off --output VGA-0 --primary --mode 1920x1080 --pos 0x0 --rotate normal
-# xrandr --output HDMI-0 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output DVI-0 --off --output VGA-0 --mode 1920x1080 --pos 0x0 --rotate normal
 
 #Dualmonitor setup
-hc detect_monitors
-# hc set_monitors 1920x1080+0+0 1920x1080+1920+0
+#hc detect_monitors
+hc set_monitors 1920x1080+0+0
 
 #room for polybar on both monitors
 #single polybar at top
@@ -286,7 +245,7 @@ hc pad 0 40
 #second polybar at bottom
 #hc pad 0 30 0 30 0
 #single polybar at top
-hc pad 1 40
+#hc pad 1 20
 #second polybar at bottom
 #hc pad 1 30 0 30 0
 

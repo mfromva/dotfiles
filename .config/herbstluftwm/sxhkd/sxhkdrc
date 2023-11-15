@@ -32,12 +32,14 @@ super + shift + Return
 
 
 #dmenu
-super + shift + d
-    ~/.local/bin/dmenu.sh
+#super + shift + d
+    #~/.local/bin/dmenu.sh
+
 
 #reload sxhkd:
 super + Escape
 	pkill -USR1 -x sxhkd
+
 
 
 
@@ -49,16 +51,15 @@ super + Escape
 ctrl + alt + w
      code
 
+# YTFZF
+alt + y
+    ~/.local/bin/yt
 
-
-#########################
-# ALT + ... KEYS        #
-#########################
 
 #################################################################
 # Alt Keychords
 #################################################################
-##Editors
+##Editors Emacs
 alt + e; {e,n}
     {emacsclient -c -a 'emacs'"--eval '(dashboard-refresh-buffer)'",alacritty -e nvim}
 
