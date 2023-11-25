@@ -15,11 +15,14 @@ pkill -u $USER '^picom$'
 picom --config $HOME/.config/herbstluftwm/picom.conf &
 sxhkd -c ~/.config/herbstluftwm/sxhkd/sxhkdrc &
 nitrogen --restore &
-indicator-stickynotes &
+nextcloud &
 numlockx on &
 run synergy &
 /usr/bin/emacs --daemon &
 dunst &
+wal -Rn
+flameshot &
+googlekeep &
 
 
 # Enable Super Keys For Menu
@@ -108,15 +111,10 @@ hc keybind $Mod-Control-Up      resize up +$resizestep
 hc keybind $Mod-Control-Right   resize right +$resizestep
 
 # TAGS or WORKSPACES
-
 #names to display in menu
 tag_names=( {1..10} )
-#tag_names=("www" "text" "gimp" "meld" "vlc" "mail" "vb" "image" "code" "chat")
-#tag_names=("I" "II" "III" "IV" "V" "VI" "VII" "VIII" "IX" "X")
 
-#keys to press to get to the tags
-#Qwerty
-# tag_keys=( {1..10} 0 )
+#tag_keys=( {1..10} 0 )
 tag_keys=( "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" )
 
 
@@ -207,29 +205,28 @@ hc rule focus=on # normally focus new clients
 #hc rule focus=off # normally do not focus new clients
 hc floating float on
 hc floating 3 on
+hc rule floatplacement=smart
+
 
 #assign applications to workspaces or tags
-hc rule class~'(firefox|Vivaldi-stable|Vivaldi-snapshot|Chromium|Google-chrome|Brave-browser)' tag=1 switchtag=on focus=on
-hc rule class~'(Subl3|code-oss)' tag=2 switchtag=on focus=on
-=hc rule class=vlc tag=4 focus=on switchtag=on
-hc rule class=qBittorrent tag=7 focus=on switchtag=on
-hc rule class=discord tag=9 focus=on switchtag=on
-hc rule class=qutebrowser tag=8 
+hc rule class=discord tag=0 focus=on switchtag=on
+hc rule class=Hexchat tag=0 switchtag=on focus=on
+hc rule class~'(Navigator|Mercury Browser|qutebrowser)' tag=2 switchtag=on focus=on
+hc rule class~'(Subl|code|Code)' tag=3 switchtag=on focus=on
+hc rule class=Emacs tag=4 focus=on
+hc rule class=GoogleKeep tag=5 focus=on
+hc rule class=vlc tag=6 focus=on switchtag=on
 hc rule class=Virt-manager tag=7 floating=on
-hc rule class=thunderbird tag=5 switchtag=on focus=on
-hc rule class=Mail tag=5 focus=on
-hc rule class=Doom Emacs tag=0 focus=on
+hc rule class=GNS3 tag=7 switchtag=on focus=on
 hc rule class=Xfce4-terminal --drop-down floating=on
-hc rule class=Hexchat tag=9 switchtag=on focus=on
-hc rule class=GNS3 tag=3 switchtag=on focus=on
-hc rule class=Indicator-stickynotes tag=9 switchtag=on focus=on
 
 
 # give focus to most common terminals
-hc rule class~'(.*[Rr]xvt.*|Alacritty|Konsole)' focus=on
+hc rule class~'(.*[Rr]xvt.*|Alacritty|Konsole)' focus=on floatplacement=center
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
 hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
+
 
 # unlock, just to be sure
 hc unlock
