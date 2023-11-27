@@ -15,14 +15,13 @@ pkill -u $USER '^picom$'
 picom --config $HOME/.config/herbstluftwm/picom.conf &
 sxhkd -c ~/.config/herbstluftwm/sxhkd/sxhkdrc &
 nitrogen --restore &
-nextcloud &
 numlockx on &
 run synergy &
 /usr/bin/emacs --daemon &
 dunst &
 wal -Rn
 flameshot &
-googlekeep &
+run googlekeep &
 
 
 # Enable Super Keys For Menu
@@ -110,27 +109,49 @@ hc keybind $Mod-Control-Down    resize down +$resizestep
 hc keybind $Mod-Control-Up      resize up +$resizestep
 hc keybind $Mod-Control-Right   resize right +$resizestep
 
+
+
+
 # TAGS or WORKSPACES
-#names to display in menu
-tag_names=( {1..10} )
+# Names to display in the menu
+tag_names=( {1..15} )
 
-#tag_keys=( {1..10} 0 )
-tag_keys=( "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" )
+# Keys for tag bindings
+tag_keys=( {1..9} 0 )
 
-
-
+# Use `hc rename` to set the default workspace name
 hc rename default "${tag_names[0]}" || true
+
+# Loop to add workspaces and set key bindings
 for i in ${!tag_names[@]} ; do
     hc add "${tag_names[$i]}"
-    # horizontal tiling as standard
     hc set_layout horizontal
     hc set default_frame_layout 1
+
     key="${tag_keys[$i]}"
     if ! [ -z "$key" ] ; then
         hc keybind "$Mod-$key" use_index "$i"
         hc keybind "$Mod-Shift-$key" chain , move_index "$i" , use_index "$i"
     fi
+
+    # For workspaces 11-15, use keys g, h, j, k, l
+    if [ "$i" -ge 10 ]; then
+        case $i in
+            10) hc keybind "Mod1-g" use_index "$i"
+                hc keybind "Mod1-Shift-g" chain , move_index "$i" , use_index "$i" ;;
+            11) hc keybind "Mod1-h" use_index "$i"
+                hc keybind "Mod1-Shift-h" chain , move_index "$i" , use_index "$i" ;;
+            12) hc keybind "Mod1-j" use_index "$i"
+                hc keybind "Mod1-Shift-j" chain , move_index "$i" , use_index "$i" ;;
+            13) hc keybind "Mod1-k" use_index "$i"
+                hc keybind "Mod1-Shift-k" chain , move_index "$i" , use_index "$i" ;;
+            14) hc keybind "Mod1-l" use_index "$i"
+                hc keybind "Mod1-Shift-l" chain , move_index "$i" , use_index "$i" ;;
+        esac
+    fi
 done
+
+
 
 # layouting
 hc keybind $Mod-s floating toggle
@@ -209,16 +230,23 @@ hc rule floatplacement=smart
 
 
 #assign applications to workspaces or tags
-hc rule class=discord tag=0 focus=on switchtag=on
-hc rule class=Hexchat tag=0 switchtag=on focus=on
+hc rule class=discord tag=13 focus=on switchtag=on
+hc rule class=Hexchat tag=13 switchtag=on focus=on
 hc rule class~'(Navigator|Mercury Browser|qutebrowser)' tag=2 switchtag=on focus=on
 hc rule class~'(Subl|code|Code)' tag=3 switchtag=on focus=on
-hc rule class=Emacs tag=4 focus=on
+hc rule class=Emacs tag=15 focus=on
 hc rule class=GoogleKeep tag=5 focus=on
 hc rule class=vlc tag=6 focus=on switchtag=on
 hc rule class=Virt-manager tag=7 floating=on
 hc rule class=GNS3 tag=7 switchtag=on focus=on
 hc rule class=Xfce4-terminal --drop-down floating=on
+hc rule class=Joplin tag=11 switchtag=on pseudotile=on
+hc rule class=koodo-reader tag=11 switchtag=on pseudotile=on
+hc rule class=qutebrowser tag=11 switchtag=on pseudotile=on
+hc rule class=Notion tag=5 switchtag=on pseudotile=on
+
+
+
 
 
 # give focus to most common terminals
