@@ -25,17 +25,17 @@ alias scripts='cd ~/.local/bin'
 alias conf='cd ~/.config'
 alias home='cd ~'
 alias dl='cd ~/Downloads'
-alias st='cd ~/Storage'
+alias st='cd ~/storage'
 
 
 # vim and emacs
 alias vim="nvim"
 alias em="/usr/bin/emacs -nw"
 alias emacs="emacsclient -c -a 'emacs'"
-alias doomsync="~/.emacs.d/bin/doom sync"
-alias doomdoctor="~/.emacs.d/bin/doom doctor"
-alias doomupgrade="~/.emacs.d/bin/doom upgrade"
-alias doompurge="~/.emacs.d/bin/doom purge"
+alias doomsync="~/.config/emacs/bin/doom sync"
+alias doomdoctor="~/.config/emacs/bin/doom doctor"
+alias doomupgrade="~/.config/emacs/bin/doom upgrade"
+alias doompurge="~/.config/emacs/bin/doom purge"
 
 # Changing "ls" to "exa"
 alias ls='exa -al --color=always --group-directories-first' # my preferred listing
@@ -45,11 +45,9 @@ alias lt='exa -aT --color=always --group-directories-first' # tree listing
 alias l.='exa -a | egrep "^\."'
 
 # pacman and yay
-alias pacsyu='sudo pacman -Syyu'                 # update only standard pkgs
-alias yaysua='yay -Sua --noconfirm'              # update only AUR pkgs (yay)
-alias yaysyu='yay -Syu --noconfirm'              # update standard pkgs and AUR pkgs (yay)
-alias parsua='paru -Sua --noconfirm'             # update only AUR pkgs (paru)
-alias parsyu='paru -Syu --noconfirm'             # update standard pkgs and AUR pkgs (paru)
+alias pacsyu='sudo aura -Syu'                 # update only standard pkgs
+alias aurup='sudo aura -Au --noconfirm'              # update only AUR pkgs (yay)
+alias asearch='sudo aura -As '             # update standard pkgs and AUR pkgs (yay)
 alias unlock='sudo rm /var/lib/pacman/db.lck'    # remove pacman lock
 alias cleanup='sudo pacman -Rns (pacman -Qtdq)'  # remove orphaned packages
 
@@ -72,7 +70,6 @@ alias rm='rm -i'
 # adding flags
 alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
-alias ncmpcpp='ncmpcpp ncmpcpp_directory=$HOME/.config/ncmpcpp/'
 ## get top process eating memory
 alias psmem='ps auxf | sort -nr -k 4'
 alias psmem10='ps auxf | sort -nr -k 4 | head -10'
@@ -106,7 +103,8 @@ alias jctl="journalctl -p 3 -xb"
 alias gpg-check="gpg2 --keyserver-options auto-key-retrieve --verify"
 # receive the key of a developer
 alias gpg-retrieve="gpg2 --keyserver-options auto-key-retrieve --receive-keys"
-
+# ssh-agent
+alias agent='eval $(ssh-agent) && ssh-add'
 # youtube-dlp
 alias yta-aac="yt-dlp --extract-audio --audio-format aac "
 alias yta-best="yt-dlp --extract-audio --audio-format best "
@@ -121,10 +119,15 @@ alias tobash="sudo chsh $USER -s /bin/bash && echo 'Now log out.'"
 alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
 alias tofish="sudo chsh $USER -s /bin/fish && echo 'Now log out.'"
 
+
 # bare git repo alias for dotfiles
-# bare git repo alias for dotfiles
-alias scripts="/usr/bin/git --git-dir=/home/darnell/storage/scripts --work-tree=$HOME"
-alias dots="/usr/bin/git --git-dir=/home/darnell/storage/dotfiles --work-tree=$HOME"
+alias scripts="/usr/bin/git --git-dir=/home/darnell/storage/git/scripts --work-tree=$HOME"
+alias dots="/usr/bin/git --git-dir=/home/darnell/storage/git/dotfiles --work-tree=$HOME"
+alias ans="/usr/bin/git --git-dir=/home/darnell/storage/git/ansible --work-tree=$HOME"
+alias lab="/usr/bin/git --git-dir=/home/darnell/storage/git/lab_configs --work-tree=$HOME"
+alias py="/usr/bin/git --git-dir=/home/darnell/storage/git/python --work-tree=$HOME"
+
+
 #arcolinux applications
 alias att="archlinux-tweak-tool"
 alias adt="archlinux-desktop-trasher"

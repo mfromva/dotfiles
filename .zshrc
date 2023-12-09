@@ -13,10 +13,7 @@ export TERM="xterm-256color"                      # getting proper colors
 export HISTORY_IGNORE="(ls|cd|pwd|exit|sudo reboot|history|cd -|cd ..)"
 export EDITOR="emacsclient -t -a ''"              # $EDITOR use Emacs in terminal
 export VISUAL="emacsclient -c -a emacs"           # $VISUAL use Emacs in GUI mode
-export BROWSER="firefox"
-export GOOGLE_API_KEY='AIzaSyDKC3qLADOvj0N-Yvtn1w8y-ME-3fWyGYc'
-export GOOGLE_SEARCH_ID='007284766711962870236:qnl_hhagnta'
-export ROFI_SEARCH='cse,ddgr'
+export BROWSER="thorium-browser"
 
 ### PATH
 if [ -d "$HOME/.bin" ] ;
@@ -135,4 +132,3 @@ source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-#neofetch
