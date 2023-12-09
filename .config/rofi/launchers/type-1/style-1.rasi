@@ -9,8 +9,8 @@
 
 /*****----- Configuration -----*****/
 configuration {
-	modi:                       "drun,window,ssh,calc,combi";
-    combi-modi:                 "clipboard:greenclip print,emoji";
+	modi:                       "drun,window,ssh,combi";
+    combi-modi:                 "emoji";
     show-icons:                 true;
     display-drun:               " Apps";
     display-ssh:                " SSH";

@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+tag="${16:-scratchpad}"
+hc() { "${herbstclient_command[@]:-herbstclient}" "$@" ;}
+
+# Adjust these values according to your preference
+x_coordinate=50   # Example x coordinate
+y_coordinate=50   # Example y coordinate
+termwidth_percent=65
+
+termwidth=$((1920 * termwidth_percent / 100))  # Assuming a screen width of 1920 pixels
+termheight=$((1080 / 2))  # Assuming a screen height of 1080 pixels
+
+# Calculate the x and y coordinates based on the specified width and height
+x_coordinate=$((x_coordinate - termwidth / 2))
+y_coordinate=$((y_coordinate - termheight))
+
+hc add "$tag"
+
+monitor=alacrittyterminal
+
+exists=false
+if ! hc add_monitor "$termwidth"x"$termheight"+"$x_coordinate"+"$y_coordinate" \
+                    "$tag" $monitor 2> /dev/null ; then
+    exists=true
+else
+    hc chain \
+        , new_attr string monitors.by-name."$monitor".my_prev_focus \
+        , substitute M monitors.focus.index \
+            set_attr monitors.by-name."$monitor".my_prev_focus M
+fi
+
+update_geom() {
+    local geom="$termwidth"x"$termheight"+"$x_coordinate"+"$y_coordinate"
+    hc move_monitor "$monitor" $geom
+}
+
+steps=${ANIMATION_STEPS:-15}
+interval=${ANIMATION_INTERVAL:-0.01}
+
+animate() {
+    progress=( "$@" )
+    for i in "${progress[@]}" ; do
+        x_coordinate=$((x_coordinate + (i * termwidth) / steps))
+        update_geom
+        sleep "$interval"
+    done
+}
+
+show() {
+    hc lock
+    hc raise_monitor "$monitor"
+    hc focus_monitor "$monitor"
+    hc unlock
+    hc lock_tag "$monitor"
+    animate $(seq $steps -1 0)
+}
+
+hide() {
+    animate $(seq 0 +1 $steps)
+    hc substitute M monitors.by-name."$monitor".my_prev_focus \
+        and + compare monitors.focus.name = "$monitor" \
+            + focus_monitor M
+    hc remove_monitor "$monitor"
+}
+
+[ $exists = true ] && hide || show

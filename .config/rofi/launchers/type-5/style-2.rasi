@@ -30,7 +30,7 @@ window {
     transparency:                "real";
     location:                    center;
     anchor:                      center;
-    fullscreen:                  false;
+    fullscreen:                  true;
     width:                       1000px;
     x-offset:                    0px;
     y-offset:                    0px;

@@ -2,7 +2,11 @@
 
 # Rofi Launcher
 alt + F1
-    ~/.config/rofi/launchers/type-6/launcher.sh    
+    ~/.config/rofi/launchers/type-6/launcher.sh   
+
+# Windows switcher for DT
+Menu
+    ~/.config/rofi/bin/windows
 
 
 #########################
@@ -11,8 +15,8 @@ alt + F1
 
 
 #Scratchpad
-alt + space
-    ~/.local/bin/scratchpad 
+#alt + space
+    #~/.local/bin/scratchpad 
     
 # Terminal
 super + Return

@@ -9,11 +9,11 @@
 
 /*****----- Configuration -----*****/
 configuration {
-	modi:                       "drun,run,filebrowser,window";
+	modi:                       "drun,ssh,window,combi";
+	combi-modi:                 "emoji";
     show-icons:                 true;
     display-drun:               "APPS";
-    display-run:                "RUN";
-    display-filebrowser:        "FILES";
+    display-ssh:                "SSH";
     display-window:             "WINDOW";
 	drun-display-format:        "{name}";
 	window-format:              "{w} · {c} · {t}";

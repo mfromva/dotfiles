@@ -10,7 +10,7 @@ function run {
 
 
 #Autostart applications
-/usr/libexec/polkit-gnome-authentication-agent-1 &
+#/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 pkill -u $USER '^picom$'
 picom --config $HOME/.config/herbstluftwm/picom.conf &
 sxhkd -c ~/.config/herbstluftwm/sxhkd/sxhkdrc &
@@ -18,10 +18,11 @@ nitrogen --restore &
 numlockx on &
 run synergy &
 /usr/bin/emacs --daemon &
-dunst &
+#dunst &
+/usr/lib/xfce4/notifyd/xfce4-notifyd &
 wal -Rn
 flameshot &
-run googlekeep &
+nm-applet &
 
 
 # Enable Super Keys For Menu
@@ -225,25 +226,22 @@ hc unrule -F
 hc rule focus=on # normally focus new clients
 #hc rule focus=off # normally do not focus new clients
 hc floating float on
-hc floating 3 on
-hc rule floatplacement=smart
+
 
 
 #assign applications to workspaces or tags
 hc rule class=discord tag=13 focus=on switchtag=on
 hc rule class=Hexchat tag=13 switchtag=on focus=on
-hc rule class~'(Navigator|Mercury Browser|qutebrowser)' tag=2 switchtag=on focus=on
-hc rule class~'(Subl|code|Code)' tag=3 switchtag=on focus=on
+hc rule class~'(Navigator|Mercury Browser|qutebrowser)' tag=2 switchtag=on pseudotile=on
+hc rule class~'(Subl|code|Code)' tag=3 switchtag=on focus=on pseudotile=on
 hc rule class=Emacs tag=15 focus=on
 hc rule class=GoogleKeep tag=5 focus=on
 hc rule class=vlc tag=6 focus=on switchtag=on
-hc rule class=Virt-manager tag=7 floating=on
+hc rule class=Virt-manager tag=7 floating=on pseudotile=on
 hc rule class=GNS3 tag=7 switchtag=on focus=on
-hc rule class=Xfce4-terminal --drop-down floating=on
 hc rule class=Joplin tag=11 switchtag=on pseudotile=on
 hc rule class=koodo-reader tag=11 switchtag=on pseudotile=on
 hc rule class=qutebrowser tag=11 switchtag=on pseudotile=on
-hc rule class=Notion tag=5 switchtag=on pseudotile=on
 
 
 
@@ -254,25 +252,18 @@ hc rule class~'(.*[Rr]xvt.*|Alacritty|Konsole)' focus=on floatplacement=center
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
 hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
+hc rule windowrole=xfce4-terminal-dropdown floating=on
 
+hc pad 0 40
 
 # unlock, just to be sure
 hc unlock
 
-
 #Dualmonitor setup
-#hc detect_monitors
-hc set_monitors 1920x1080+0+0
+hc detect_monitors
+#hc set_monitors 1920x1080+0+0
+#hc auto_detect_panels
 
-#room for polybar on both monitors
-#single polybar at top
-hc pad 0 40
-#second polybar at bottom
-#hc pad 0 30 0 30 0
-#single polybar at top
-#hc pad 1 20
-#second polybar at bottom
-#hc pad 1 30 0 30 0
 
 #launching polybar
 ~/.config/herbstluftwm/panel.sh
